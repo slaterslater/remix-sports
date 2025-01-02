@@ -23,7 +23,6 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const page = "1"
   const news = await getPlayerNewsPost(page)
-
   return json({ news })
 }
 
@@ -31,7 +30,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData()
   const page = formData.get("nextpage")
   const headlines = await getPlayerNewsPost(page as string)
-
   return json({ headlines })
 }
 
@@ -91,12 +89,7 @@ export default function Index() {
         </ul>
       </nav> */}
       <Headlines news={headlines} />
-      <Form
-        method="POST"
-        onSubmit={nextPage}
-        preventScrollReset={true}
-        // key={page}
-      >
+      <Form method="POST" onSubmit={nextPage} preventScrollReset={true}>
         <input type="hidden" value={page + 1} name="nextpage" />
         <button type="submit">MORE</button>
       </Form>
