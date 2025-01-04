@@ -1,4 +1,9 @@
-import { Form, useActionData, useLoaderData } from "@remix-run/react"
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react"
 import {
   type ActionFunctionArgs,
   json,
@@ -68,6 +73,7 @@ const Headlines = ({ news }: { news: string[] | undefined }) => {
 export default function Index() {
   const { news } = useLoaderData<typeof loader>()
   const moreNews = useActionData<typeof action>()
+  const navigation = useNavigation()
 
   const [page, setPage] = useState(1)
   const [headlines, setHeadlines] = useState(news)
@@ -78,6 +84,7 @@ export default function Index() {
   }, [moreNews])
 
   const nextPage = () => setPage((prev) => (prev += 1))
+  const isIdle = navigation.state === "idle"
 
   return (
     <main>
@@ -91,7 +98,7 @@ export default function Index() {
       <Headlines news={headlines} />
       <Form method="POST" onSubmit={nextPage} preventScrollReset={true}>
         <input type="hidden" value={page + 1} name="nextpage" />
-        <button type="submit">load more</button>
+        {isIdle && <button type="submit">load more</button>}
       </Form>
     </main>
   )
