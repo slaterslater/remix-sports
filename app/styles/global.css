@@ -1,0 +1,109 @@
+body {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+#headlines {
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+#headlines > li {
+  border-top: 2px solid slategray;
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+.PlayerNewsPost-player {
+  display: inline-flex;
+  width: 100%;
+}
+
+.PlayerNewsPost-name a {
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+  width: 100%;
+}
+
+.PlayerNewsPost-headline {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.PlayerNewsPost-player-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 90px;
+  padding: 5px 0 0 5px;
+}
+
+.PlayerNewsPost-team {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.PlayerNewsPost-team img {
+  width: 80px;
+  height: 80px;
+  /* margin-left: auto; */
+  /* position: absolute;
+  right: 0; */
+}
+
+.PlayerNewsPost-name {
+  font-size: 1.2em;
+}
+
+.PlayerNewsPost-team-logo {
+  margin-left: auto;
+  transform: translateY(-30px);
+}
+
+.PlayerNewsPost-position {
+  margin: 0 5px;
+}
+
+/* RELATED */
+
+.PlayerNewsPost-related-item {
+}
+
+.PlayerNewsPost-related-item > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+
+.PlayerNewsPost-related-item > a > picture {
+  margin-right: 5px;
+}
+
+.PlayerNewsPost-related {
+  margin-top: 5px;
+}
+
+/* more button */
+
+form {
+  width: 100%;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+form button {
+  text-transform: uppercase;
+}

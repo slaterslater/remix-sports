@@ -1,17 +1,14 @@
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react"
+import { Form, useActionData, useLoaderData } from "@remix-run/react"
 import {
   type ActionFunctionArgs,
   json,
   type LoaderFunctionArgs,
   type MetaFunction,
+  type LinksFunction,
 } from "@vercel/remix"
 import * as cheerio from "cheerio"
 import { useEffect, useState } from "react"
+import styles from "~/styles/global.css?url"
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,6 +16,8 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Sports Headlines" },
   ]
 }
+
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const page = "1"
@@ -42,7 +41,7 @@ export const getPlayerNewsPost = async (page: string | number) => {
   const playerNewsPost = $(".PlayerNewsPost")
     .map(function () {
       const postClone = $(this).clone()
-      postClone.find(".PlayerNewsPost-footer").remove()
+      postClone.find(".PlayerNewsPost-footer, .FavoriteLink-wrapper").remove()
       return postClone.html()
     })
     .toArray()
@@ -54,9 +53,9 @@ const Headlines = ({ news }: { news: string[] | undefined }) => {
   if (!news) return null
   return (
     <div className="z-10 w-full max-w-lg items-center justify-between font-mono text-sm lg:flex">
-      <ul>
+      <ul id="headlines">
         {news.map((__html, i) => (
-          <li key={i} className="mb-10 border-b pb-5 snap-y">
+          <li key={i} className="mb-10 pb-5 snap-y">
             <div dangerouslySetInnerHTML={{ __html }} />
           </li>
         ))}
@@ -91,7 +90,7 @@ export default function Index() {
       <Headlines news={headlines} />
       <Form method="POST" onSubmit={nextPage} preventScrollReset={true}>
         <input type="hidden" value={page + 1} name="nextpage" />
-        <button type="submit">MORE</button>
+        <button type="submit">load more</button>
       </Form>
     </main>
   )
