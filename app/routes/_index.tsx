@@ -52,15 +52,16 @@ export const getPlayerNewsPost = async (page: string | number) => {
 const Headlines = ({ news }: { news: string[] | undefined }) => {
   if (!news) return null
   return (
-    <div className="z-10 w-full max-w-lg items-center justify-between font-mono text-sm lg:flex">
-      <ul id="headlines">
-        {news.map((__html, i) => (
-          <li key={i} className="mb-10 pb-5 snap-y">
-            <div dangerouslySetInnerHTML={{ __html }} />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul
+      id="headlines"
+      className="z-10 w-full max-w-lg items-center justify-between font-mono text-sm lg:flex"
+    >
+      {news.map((__html, i) => (
+        <li key={i} className="mb-10 pb-5 snap-y">
+          <div dangerouslySetInnerHTML={{ __html }} />
+        </li>
+      ))}
+    </ul>
   )
 }
 

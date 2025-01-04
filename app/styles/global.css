@@ -5,8 +5,6 @@ body {
 #headlines {
   padding: 0 10px;
   list-style-type: none;
-  width: 100%;
-  min-width: 300px;
   max-width: 600px;
   margin: 20px auto;
 }
