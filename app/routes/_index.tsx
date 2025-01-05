@@ -3,6 +3,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigation,
+  useRevalidator,
 } from "@remix-run/react"
 import {
   type ActionFunctionArgs,
@@ -13,6 +14,9 @@ import {
 } from "@vercel/remix"
 import * as cheerio from "cheerio"
 import { useEffect, useState } from "react"
+import { useInterval } from "usehooks-ts"
+import SiteNav from "~/components/SiteNav"
+import Spinner from "~/components/Spinner"
 import styles from "~/styles/global.css?url"
 
 export const meta: MetaFunction = () => {
@@ -74,9 +78,17 @@ export default function Index() {
   const { news } = useLoaderData<typeof loader>()
   const moreNews = useActionData<typeof action>()
   const navigation = useNavigation()
+  const revalidator = useRevalidator()
 
   const [page, setPage] = useState(1)
   const [headlines, setHeadlines] = useState(news)
+
+  const REFRESH = 1000 * 20 // 20 seconds
+
+  useInterval(() => {
+    if (revalidator.state !== "idle") return
+    revalidator.revalidate()
+  }, REFRESH)
 
   useEffect(() => {
     if (!moreNews) return
@@ -88,18 +100,15 @@ export default function Index() {
 
   return (
     <main>
-      {/* <nav>
-        <ul>
-          <li><Link href="/" title="go to top">NFL</Link></li>
-          <li><Link href="/" title="go to top">Jays</Link></li>
-          <li><Link href="/" title="go to top"><IoMdRefresh /></Link></li>
-        </ul>
-      </nav> */}
+      <SiteNav />
       <Headlines news={headlines} />
-      <Form method="POST" onSubmit={nextPage} preventScrollReset={true}>
-        <input type="hidden" value={page + 1} name="nextpage" />
-        {isIdle && <button type="submit">load more</button>}
-      </Form>
+      {isIdle && (
+        <Form method="POST" onSubmit={nextPage} preventScrollReset={true}>
+          <input type="hidden" value={page + 1} name="nextpage" />
+          <button type="submit">load more</button>
+        </Form>
+      )}
+      {!isIdle && <Spinner />}
     </main>
   )
 }
