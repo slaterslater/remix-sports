@@ -87,7 +87,11 @@ export default function Index() {
 
   useInterval(() => {
     if (revalidator.state !== "idle") return
-    revalidator.revalidate()
+    try {
+      revalidator.revalidate()
+    } catch (error) {
+      console.log({ error })
+    }
   }, REFRESH)
 
   useEffect(() => {

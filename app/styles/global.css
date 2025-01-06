@@ -1,5 +1,6 @@
 body {
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin-bottom: 40px;
 }
 
 #headlines {
@@ -20,6 +21,10 @@ ul {
   margin-bottom: 25px;
 }
 
+.PlayerNewsPost-image > a > picture > img {
+  border-radius: 0 0 2px 2px;
+}
+
 .PlayerNewsPost-player {
   display: inline-flex;
   width: 100%;
@@ -38,14 +43,16 @@ ul {
 
 .PlayerNewsPost-headline {
   font-weight: 600;
-  margin-bottom: 8px;
+  /* margin-top: 10px; */
+  margin: 8px 0;
 }
 
 .PlayerNewsPost-player-info {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 90px;
+  min-height: 60px;
+  height: 0;
   padding: 5px 0 0 5px;
 }
 
@@ -53,20 +60,8 @@ ul {
   display: flex;
   flex-direction: row-reverse;
   color: slategray;
-  font-size: 0.85em;
-  padding-left: 3px;
-}
-
-.PlayerNewsPost-team img {
-  /* width: 80px;
-  height: 80px; */
-  /* margin-left: auto; */
-  /* position: absolute;
-  right: 0; */
-}
-
-.PlayerNewsPost-image > a > picture > img {
-  border-radius: 0 0 2px 2px;
+  font-size: 0.8em;
+  padding-left: 1px;
 }
 
 .PlayerNewsPost-name {
@@ -77,10 +72,34 @@ ul {
   margin-left: auto;
   transform: translateY(-30px);
 }
-
-.PlayerNewsPost-position {
-  margin: 0 5px;
+.PlayerNewsPost-team-logo img {
+  height: 80px;
+  width: 80px;
 }
+
+@media (max-width: 500px) {
+  /* .PlayerNewsPost-image > a > picture > img {
+    height: 70px;
+    width: 70px;
+  } */
+
+  .PlayerNewsPost-team-logo img {
+    height: 60px;
+    width: 60px;
+  }
+}
+
+/* .PlayerNewsPost-team-logo > a > picture > img {
+  height: 80px;
+  width: 80px;
+} */
+
+.PlayerNewsPost-number,
+.PlayerNewsPost-position {
+  margin-right: 5px;
+}
+
+/* .PlayerNewsPost-team {} */
 
 /* RELATED */
 
