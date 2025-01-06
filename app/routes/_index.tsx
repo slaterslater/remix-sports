@@ -12,12 +12,13 @@ import {
   type MetaFunction,
   type LinksFunction,
 } from "@vercel/remix"
-import * as cheerio from "cheerio"
 import { useEffect, useState } from "react"
 import { useInterval } from "usehooks-ts"
+import Headlines from "~/components/Headlines"
 import SiteNav from "~/components/SiteNav"
-import Spinner from "~/components/Spinner"
+import Spinner, { links as SpinnerLinks } from "~/components/Spinner"
 import styles from "~/styles/global.css?url"
+import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,7 +27,10 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
+export const links: LinksFunction = () => [
+  ...SpinnerLinks(),
+  { rel: "stylesheet", href: styles },
+]
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const page = "1"
@@ -39,39 +43,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const page = formData.get("nextpage")
   const headlines = await getPlayerNewsPost(page as string)
   return json({ headlines })
-}
-
-export const getPlayerNewsPost = async (page: string | number) => {
-  const URL = `https://www.nbcsports.com/fantasy/football/player-news?f0=Headline&p=${page}`
-  const resp = await fetch(URL)
-  const text = await resp.text()
-
-  const $ = cheerio.load(text)
-  const playerNewsPost = $(".PlayerNewsPost")
-    .map(function () {
-      const postClone = $(this).clone()
-      postClone.find(".PlayerNewsPost-footer, .FavoriteLink-wrapper").remove()
-      return postClone.html()
-    })
-    .toArray()
-
-  return playerNewsPost
-}
-
-const Headlines = ({ news }: { news: string[] | undefined }) => {
-  if (!news) return null
-  return (
-    <ul
-      id="headlines"
-      className="z-10 w-full max-w-lg items-center justify-between font-mono text-sm lg:flex"
-    >
-      {news.map((__html, i) => (
-        <li key={i} className="mb-10 pb-5 snap-y">
-          <div dangerouslySetInnerHTML={{ __html }} />
-        </li>
-      ))}
-    </ul>
-  )
 }
 
 export default function Index() {
