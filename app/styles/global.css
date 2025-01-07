@@ -78,28 +78,21 @@ ul {
 }
 
 @media (max-width: 500px) {
-  /* .PlayerNewsPost-image > a > picture > img {
-    height: 70px;
-    width: 70px;
-  } */
-
   .PlayerNewsPost-team-logo img {
     height: 60px;
     width: 60px;
   }
 }
 
-/* .PlayerNewsPost-team-logo > a > picture > img {
-  height: 80px;
-  width: 80px;
-} */
-
 .PlayerNewsPost-number,
 .PlayerNewsPost-position {
   margin-right: 5px;
 }
 
-/* .PlayerNewsPost-team {} */
+.PlayerNewsPost-analysis > span > a {
+  color: black;
+  font-weight: bold;
+}
 
 /* RELATED */
 
