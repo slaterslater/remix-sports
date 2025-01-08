@@ -13,7 +13,6 @@ import {
   type LinksFunction,
 } from "@vercel/remix"
 import { useEffect, useState } from "react"
-import { useInterval } from "usehooks-ts"
 import Headlines from "~/components/Headlines"
 import SiteNav from "~/components/SiteNav"
 import Spinner, { links as SpinnerLinks } from "~/components/Spinner"
@@ -54,16 +53,13 @@ export default function Index() {
   const [page, setPage] = useState(1)
   const [headlines, setHeadlines] = useState(news)
 
-  const REFRESH = 1000 * 20 // 20 seconds
-
-  useInterval(() => {
-    if (revalidator.state !== "idle") return
-    try {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (revalidator.state !== "idle") return
       revalidator.revalidate()
-    } catch (error) {
-      console.log({ error })
-    }
-  }, REFRESH)
+    }, 1000 * 20) // every 20 seconds
+    return () => clearInterval(interval)
+  }, [revalidator])
 
   useEffect(() => {
     if (!moreNews) return
