@@ -56,7 +56,11 @@ export default function Index() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (revalidator.state !== "idle") return
-      revalidator.revalidate()
+      try {
+        revalidator.revalidate()
+      } catch (error) {
+        console.log(error)
+      }
     }, 1000 * 20) // every 20 seconds
     return () => clearInterval(interval)
   }, [revalidator])
