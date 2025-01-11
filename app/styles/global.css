@@ -5,15 +5,20 @@ body {
 
 /* NAV */
 
+nav {
+  padding: 5px 10px;
+}
+
 nav ul {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   justify-content: flex-end;
   margin: 0 auto;
 }
 
 nav ul li a {
-  margin: 0 5px;
+  margin: 0 10px;
   text-decoration: none;
   color: slategray;
   font-weight: bold;
@@ -30,7 +35,7 @@ a.active {
   padding: 0 10px;
   list-style-type: none;
   max-width: 600px;
-  margin: 20px auto;
+  margin: 15px auto;
 }
 
 ul {
