@@ -3,6 +3,29 @@ body {
   margin-bottom: 40px;
 }
 
+/* NAV */
+
+nav ul {
+  width: 600px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+}
+
+nav ul li a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: slategray;
+  font-weight: bold;
+}
+
+a.active {
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+/* HEADLINES */
+
 #headlines {
   padding: 0 10px;
   list-style-type: none;
