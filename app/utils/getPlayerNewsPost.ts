@@ -8,9 +8,6 @@ export const getPlayerNewsPost = async ({
   page?: string | number | null
 }) => {
   const URL = `https://www.nbcsports.com/${sport}/player-news?f0=Headline&p=${page}`
-  // const URL = `https://www.nbcsports.com/fantasy/football/player-news?f0=Headline&p=${page}`
-  // https://www.nbcsports.com/mlb/toronto-blue-jays/player-news
-  // $
   const resp = await fetch(URL)
   const text = await resp.text()
 
@@ -18,7 +15,11 @@ export const getPlayerNewsPost = async ({
   const playerNewsPost = $(".PlayerNewsPost")
     .map(function () {
       const postClone = $(this).clone()
-      postClone.find(".PlayerNewsPost-footer, .FavoriteLink-wrapper").remove()
+      postClone
+        .find(
+          ".PlayerNewsPost-footer, .FavoriteLink-wrapper, .PlayerNewsPost-promotionalText"
+        )
+        .remove()
       return postClone.html()
     })
     .toArray()

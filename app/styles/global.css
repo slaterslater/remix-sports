@@ -129,6 +129,8 @@ ul {
   align-items: center;
   text-decoration: none;
   color: black;
+  height: 36px;
+  padding-left: 36px;
 }
 
 .PlayerNewsPost-related-title {
@@ -137,6 +139,9 @@ ul {
 
 .PlayerNewsPost-related-item > a > picture {
   margin-right: 5px;
+  margin-left: -36px;
+  /* position: absolute; */
+  /* left: 0; */
 }
 
 .PlayerNewsPost-related {
