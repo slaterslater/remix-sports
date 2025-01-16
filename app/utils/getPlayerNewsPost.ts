@@ -2,12 +2,15 @@ import * as cheerio from "cheerio"
 
 export const getPlayerNewsPost = async ({
   sport,
-  page,
+  newsType,
+  page = 1,
 }: {
   sport: string | undefined
+  newsType: string | null
   page?: string | number | null
 }) => {
-  const URL = `https://www.nbcsports.com/${sport}/player-news?f0=Headline&p=${page}`
+  const URL = `https://www.nbcsports.com/${sport}/player-news?f0=${newsType}&p=${page}`
+
   const resp = await fetch(URL)
   const text = await resp.text()
 

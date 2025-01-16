@@ -14,7 +14,7 @@ import type {
 } from "@vercel/remix"
 import { useEffect, useState } from "react"
 import Headlines from "~/components/Headlines"
-import SiteNav from "~/components/SiteNav"
+import { SiteNav } from "~/components/SiteNav"
 import Spinner, { links as SpinnerLinks } from "~/components/Spinner"
 import styles from "~/styles/global.css?url"
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
@@ -31,28 +31,47 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
 ]
 
+const options = {
+  all: "All+News",
+  headlines: "Headline",
+}
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sport = params["*"]
-  const news = await getPlayerNewsPost({ sport })
-  return json({ sport, news })
+  const url = new URL(request.url)
+  const newsParam = url.searchParams.get("news") as keyof typeof options | null
+  const newsType = newsParam ? options[newsParam] : "all"
+  const posts = await getPlayerNewsPost({ sport, newsType })
+  return json({ sport, newsParam, newsType, posts })
+}
+
+type ActionData = {
+  posts: string[]
+}
+
+type FormData = {
+  sport: string
+  newsType: string
+  page: string
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const sport = params["*"]
-  const page = formData.get("nextpage") as string
-  const headlines = await getPlayerNewsPost({ sport, page })
-  return json({ headlines })
+  const { sport, newsType, page } = Object.fromEntries(formData)
+  const posts = await getPlayerNewsPost({ sport, newsType, page } as FormData)
+  return json<ActionData>({ posts })
 }
 
 export default function Index() {
-  const { sport, news } = useLoaderData<typeof loader>()
-  const moreNews = useActionData<typeof action>()
+  const { sport, newsParam, newsType, posts } = useLoaderData<typeof loader>()
+  const moreNews = useActionData<ActionData>()
   const navigation = useNavigation()
   const revalidator = useRevalidator()
 
   const [page, setPage] = useState(1)
-  const [headlines, setHeadlines] = useState(news)
+  const [news, setNews] = useState(posts)
+
+  console.log(typeof moreNews)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,25 +86,31 @@ export default function Index() {
   }, [revalidator])
 
   useEffect(() => {
-    if (!moreNews) return
-    setHeadlines((prev: string[]) => [...prev, ...moreNews.headlines])
-  }, [moreNews])
+    if (posts && !moreNews) setNews(posts)
+    if (moreNews) {
+      setNews((prev: string[]) => [...prev, ...moreNews.posts])
+    }
+  }, [posts, moreNews])
 
   const nextPage = () => setPage((prev) => (prev += 1))
+
   const isIdle = navigation.state === "idle"
+  const action = `${sport}?news=${newsParam}`
 
   return (
     <main>
       <SiteNav />
-      <Headlines news={headlines} />
+      <Headlines news={news} key={action} />
       {isIdle && (
         <Form
           method="POST"
           onSubmit={nextPage}
           preventScrollReset={true}
-          action={sport}
+          action={action}
         >
-          <input type="hidden" value={page + 1} name="nextpage" />
+          <input type="hidden" value={page + 1} name="page" />
+          <input type="hidden" value={sport} name="sport" />
+          <input type="hidden" value={newsType} name="newsType" />
           <button type="submit">load more</button>
         </Form>
       )}

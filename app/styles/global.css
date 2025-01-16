@@ -6,27 +6,19 @@ body {
 /* NAV */
 
 nav {
-  padding: 5px 10px;
-}
-
-nav ul {
   width: 100%;
   max-width: 600px;
-  display: flex;
-  justify-content: flex-end;
   margin: 0 auto;
 }
 
-nav ul li a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: slategray;
-  font-weight: bold;
+nav form {
+  display: flex;
+  justify-content: flex-end;
 }
 
-a.active {
-  color: black;
-  border-bottom: 2px solid black;
+nav form select {
+  width: 90px;
+  margin-right: 10px;
 }
 
 /* HEADLINES */

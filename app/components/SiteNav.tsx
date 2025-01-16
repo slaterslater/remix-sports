@@ -1,37 +1,30 @@
-import { NavLink } from "@remix-run/react"
+import { Form, useNavigate } from "@remix-run/react"
 
-export default function SiteNav() {
+export function SiteNav() {
+  const navigate = useNavigate()
+
+  const handleChange = (event: React.FormEvent | undefined) => {
+    const form = event?.currentTarget as HTMLFormElement
+    const formData = new FormData(form)
+    const { sport, newsType } = Object.fromEntries(formData)
+    const url = `${sport}?news=${newsType}`
+    navigate(url)
+  }
+
   return (
     <nav>
-      <ul>
-        <li>
-          <NavLink
-            to="fantasy/football"
-            className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "active" : ""
-            }
-            reloadDocument
-          >
-            NFL
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="mlb/toronto-blue-jays"
-            className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "active" : ""
-            }
-            reloadDocument
-          >
-            Jays
-          </NavLink>
-        </li>
-        {/* <li>
-          <Link href="." title="go to top">
-            <IoMdRefresh />
-          </Link>
-        </li> */}
-      </ul>
+      <Form onChange={handleChange}>
+        <select name="sport">
+          <option value="fantasy/football">NFL</option>
+          <option value="mlb/toronto-blue-jays">Jays</option>
+        </select>
+        <select name="newsType">
+          <option value="headlines">Headlines</option>
+          <option value="all">All News</option>
+        </select>
+      </Form>
     </nav>
+
+    //  <IoMdRefresh />
   )
 }
