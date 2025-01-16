@@ -3,7 +3,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigation,
-  useRevalidator,
+  // useRevalidator,
 } from "@remix-run/react"
 import { json } from "@vercel/remix"
 import type {
@@ -66,24 +66,22 @@ export default function Index() {
   const { sport, newsParam, newsType, posts } = useLoaderData<typeof loader>()
   const moreNews = useActionData<ActionData>()
   const navigation = useNavigation()
-  const revalidator = useRevalidator()
+  // const revalidator = useRevalidator()
 
   const [page, setPage] = useState(1)
   const [news, setNews] = useState(posts)
 
-  console.log(typeof moreNews)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (revalidator.state !== "idle") return
-      try {
-        revalidator.revalidate()
-      } catch (error) {
-        console.log(error)
-      }
-    }, 1000 * 20) // every 20 seconds
-    return () => clearInterval(interval)
-  }, [revalidator])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (revalidator.state !== "idle") return
+  //     try {
+  //       revalidator.revalidate()
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }, 1000 * 20) // every 20 seconds
+  //   return () => clearInterval(interval)
+  // }, [revalidator])
 
   useEffect(() => {
     if (posts && !moreNews) setNews(posts)
