@@ -101,6 +101,7 @@ export default function Index() {
       <Headlines news={news} key={action} />
       {isIdle && (
         <Form
+          id="loadmore"
           method="POST"
           onSubmit={nextPage}
           preventScrollReset={true}
