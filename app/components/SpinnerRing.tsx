@@ -1,12 +1,12 @@
 import type { LinksFunction } from "@vercel/remix"
 
-import styles from "~/styles/spinner.css?url"
+import styles from "~/styles/ring.css?url"
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
 
-export default function Spinner() {
+export default function SpinnerRing() {
   return (
-    <div className="lds-ellipsis">
+    <div className="lds-ring">
       <div></div>
       <div></div>
       <div></div>

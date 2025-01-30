@@ -1,7 +1,12 @@
-import { Form, useNavigate } from "@remix-run/react"
+import { Form, useNavigate, useRevalidator } from "@remix-run/react"
+import { IoMdRefresh } from "react-icons/io"
+import Spinner from "./SpinnerRing"
 
 export function SiteNav() {
   const navigate = useNavigate()
+  const revalidator = useRevalidator()
+
+  const isIdle = revalidator.state === "idle"
 
   const handleChange = (event: React.FormEvent | undefined) => {
     const form = event?.currentTarget as HTMLFormElement
@@ -9,6 +14,11 @@ export function SiteNav() {
     const { sport, newsType } = Object.fromEntries(formData)
     const url = `${sport}?news=${newsType}`
     navigate(url)
+  }
+
+  const refresh = () => {
+    if (!isIdle) return
+    revalidator.revalidate()
   }
 
   return (
@@ -23,8 +33,15 @@ export function SiteNav() {
           <option value="all">All News</option>
         </select>
       </Form>
+      <button
+        id="refresh"
+        type="button"
+        onClick={refresh}
+        title="refresh data"
+        disabled={!isIdle}
+      >
+        {isIdle ? <IoMdRefresh /> : <Spinner />}
+      </button>
     </nav>
-
-    //  <IoMdRefresh />
   )
 }

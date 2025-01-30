@@ -3,7 +3,6 @@ import {
   useActionData,
   useLoaderData,
   useNavigation,
-  // useRevalidator,
 } from "@remix-run/react"
 import { json } from "@vercel/remix"
 import type {
@@ -15,7 +14,8 @@ import type {
 import { useEffect, useState } from "react"
 import Headlines from "~/components/Headlines"
 import { SiteNav } from "~/components/SiteNav"
-import Spinner, { links as SpinnerLinks } from "~/components/Spinner"
+import Spinner, { links as EllipsisStyles } from "~/components/SpinnerEllipsis"
+import { links as RingStyles } from "~/components/SpinnerRing"
 import styles from "~/styles/global.css?url"
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
 
@@ -27,7 +27,8 @@ export const meta: MetaFunction = () => {
 }
 
 export const links: LinksFunction = () => [
-  ...SpinnerLinks(),
+  ...EllipsisStyles(),
+  ...RingStyles(),
   { rel: "stylesheet", href: styles },
 ]
 
@@ -66,22 +67,9 @@ export default function Index() {
   const { sport, newsParam, newsType, posts } = useLoaderData<typeof loader>()
   const moreNews = useActionData<ActionData>()
   const navigation = useNavigation()
-  // const revalidator = useRevalidator()
 
   const [page, setPage] = useState(1)
   const [news, setNews] = useState(posts)
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (revalidator.state !== "idle") return
-  //     try {
-  //       revalidator.revalidate()
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }, 1000 * 20) // every 20 seconds
-  //   return () => clearInterval(interval)
-  // }, [revalidator])
 
   useEffect(() => {
     if (posts && !moreNews) setNews(posts)
