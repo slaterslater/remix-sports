@@ -18,6 +18,12 @@ nav form select {
   width: 90px;
   height: 25px;
   margin-right: 10px;
+  background-color: buttonface;
+  border-radius: 2px;
+}
+
+nav form select:hover {
+  background-color: #e0e0e0;
 }
 
 nav #refresh {

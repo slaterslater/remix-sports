@@ -66,21 +66,25 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function Index() {
   const { sport, newsParam, newsType, posts } = useLoaderData<typeof loader>()
   const moreNews = useActionData<ActionData>()
-  const navigation = useNavigation()
-
-  const [page, setPage] = useState(1)
   const [news, setNews] = useState(posts)
 
+  const navigation = useNavigation()
+  const isIdle = navigation.state === "idle"
+
   useEffect(() => {
-    if (posts && !moreNews) setNews(posts)
+    if (!isIdle) return
+    if (posts && !moreNews) {
+      setNews(posts)
+      setPage(1)
+    }
     if (moreNews) {
       setNews((prev: string[]) => [...prev, ...moreNews.posts])
     }
-  }, [posts, moreNews])
+  }, [posts, moreNews, isIdle])
 
+  const [page, setPage] = useState(1)
   const nextPage = () => setPage((prev) => (prev += 1))
 
-  const isIdle = navigation.state === "idle"
   const action = `${sport}?news=${newsParam}`
 
   return (
