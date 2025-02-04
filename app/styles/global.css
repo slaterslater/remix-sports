@@ -64,6 +64,8 @@ ul {
   display: block;
   background-image: url("/public/generic-avatar.webp");
   background-size: 80px 80px;
+  color: white;
+  font-size: 1px;
 }
 
 .PlayerNewsPost-image > a > picture > img {
