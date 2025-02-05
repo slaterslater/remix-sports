@@ -58,6 +58,13 @@ ul {
   margin-bottom: 25px;
 }
 
+/* PLAYER */
+
+.PlayerNewsPost-player {
+  display: inline-flex;
+  width: 100%;
+}
+
 .PlayerNewsPost-image > a {
   width: 80px;
   height: 80px;
@@ -66,34 +73,13 @@ ul {
   background-size: 80px 80px;
   color: white;
   font-size: 1px;
+  border-radius: 0 0 2px 2px;
 }
 
 .PlayerNewsPost-image > a > picture > img {
   border-radius: 0 0 2px 2px;
   width: 100%;
   height: 100%;
-}
-
-.PlayerNewsPost-player {
-  display: inline-flex;
-  width: 100%;
-}
-
-.PlayerNewsPost-name a {
-  color: black;
-  text-decoration: none;
-  font-weight: 600;
-  width: 100%;
-}
-
-.PlayerNewsPost-content {
-  padding-left: 2px;
-}
-
-.PlayerNewsPost-headline {
-  font-weight: 600;
-  /* margin-top: 10px; */
-  margin: 8px 0;
 }
 
 .PlayerNewsPost-player-info {
@@ -105,16 +91,25 @@ ul {
   padding: 5px 0 0 5px;
 }
 
+.PlayerNewsPost-name {
+  font-size: 1.2em;
+}
+
+.PlayerNewsPost-name a {
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+  width: 100%;
+}
+
 .PlayerNewsPost-team {
   display: flex;
   flex-direction: row-reverse;
+  justify-content: flex-end;
   color: slategray;
   font-size: 0.8em;
   padding-left: 1px;
-}
-
-.PlayerNewsPost-name {
-  font-size: 1.2em;
+  margin-top: 2px;
 }
 
 .PlayerNewsPost-team-logo {
@@ -138,6 +133,22 @@ ul {
   margin-right: 5px;
 }
 
+/* CONTENT */
+
+.PlayerNewsPost-content {
+  padding-left: 2px;
+}
+
+.PlayerNewsPost-headline {
+  font-weight: 600;
+  /* margin-top: 10px; */
+  margin: 8px 0;
+}
+
+.PlayerNewsPost-analysis {
+  line-height: 1.35em;
+}
+
 .PlayerNewsPost-analysis > span > a {
   color: black;
   font-weight: bold;
@@ -145,45 +156,39 @@ ul {
 
 /* RELATED */
 
-.PlayerNewsPost-related-item > a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: black;
-  height: 36px;
-  padding-left: 36px;
+.PlayerNewsPost-related {
+  margin-top: 5px;
+  margin-left: 2px;
 }
 
 .PlayerNewsPost-related-title {
   margin-bottom: 3px;
 }
 
+.PlayerNewsPost-related-item > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  height: 32px;
+  padding-left: 36px;
+  font-size: 0.8em;
+}
+
 .PlayerNewsPost-related-item > a > picture {
   margin-right: 5px;
   margin-left: -36px;
-  /* position: absolute; */
-  /* left: 0; */
 }
 
-.PlayerNewsPost-related {
-  margin-top: 5px;
-  margin-left: 2px;
-}
-
-/* more button */
+/* LOAD MORE */
 
 #loadmore {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* min-width: 300px;
-  max-width: 600px; */
-  /* min-height: 40px; */
   height: 80px;
-  /* margin: 0 auto; */
   text-align: center;
-  /* margin-bottom: 50px; */
 }
 
 form button {
