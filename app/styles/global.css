@@ -162,7 +162,7 @@ ul {
 }
 
 .PlayerNewsPost-related-title {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .PlayerNewsPost-related-item > a {
@@ -173,11 +173,16 @@ ul {
   height: 32px;
   padding-left: 36px;
   font-size: 0.8em;
+  margin-bottom: 2px;
 }
 
 .PlayerNewsPost-related-item > a > picture {
   margin-right: 5px;
   margin-left: -36px;
+}
+
+.PlayerNewsPost-related img {
+  border-radius: 2px;
 }
 
 /* LOAD MORE */
