@@ -5,32 +5,12 @@ import {
   useNavigation,
 } from "@remix-run/react"
 import { json } from "@vercel/remix"
-import type {
-  ActionFunction,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix"
+import type { ActionFunction, LoaderFunction } from "@vercel/remix"
 import { useEffect, useState } from "react"
-import Headlines from "~/components/Headlines"
-import { SiteNav } from "~/components/SiteNav"
-import Spinner, { links as EllipsisStyles } from "~/components/SpinnerEllipsis"
-import { links as RingStyles } from "~/components/SpinnerRing"
-import styles from "~/styles/global.css?url"
+import News from "~/components/News"
+import Spinner from "~/components/Spinner"
+
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Remix Sports" },
-    { name: "description", content: "Sports Headlines" },
-  ]
-}
-
-export const links: LinksFunction = () => [
-  ...EllipsisStyles(),
-  ...RingStyles(),
-  { rel: "stylesheet", href: styles },
-]
 
 const options = {
   all: "All+News",
@@ -46,17 +26,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json({ sport, newsParam, newsType, posts })
 }
 
-type ActionData = {
+interface ActionData {
   posts: string[]
 }
 
-type FormData = {
+interface FormData {
   sport: string
   newsType: string
   page: string
 }
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const { sport, newsType, page } = Object.fromEntries(formData)
   const posts = await getPlayerNewsPost({ sport, newsType, page } as FormData)
@@ -88,9 +68,8 @@ export default function Index() {
   const action = `${sport}?news=${newsParam}`
 
   return (
-    <main>
-      <SiteNav />
-      <Headlines news={news} key={action} />
+    <>
+      <News news={news} key={action} />
       {isIdle && (
         <Form
           id="loadmore"
@@ -102,10 +81,12 @@ export default function Index() {
           <input type="hidden" value={page + 1} name="page" />
           <input type="hidden" value={sport} name="sport" />
           <input type="hidden" value={newsType} name="newsType" />
-          <button type="submit">load more</button>
+          <button type="submit" name="intent" value="more">
+            load more
+          </button>
         </Form>
       )}
-      {!isIdle && <Spinner />}
-    </main>
+      {!isIdle && <Spinner variant="ellipsis" />}
+    </>
   )
 }

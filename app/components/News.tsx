@@ -1,4 +1,10 @@
-export default function Headlines({ news }: { news: string[] | undefined }) {
+// Headlines Component
+
+interface NewsProps {
+  news: string[] | undefined
+}
+
+export default function Headlines({ news }: NewsProps) {
   if (!news) return null
   return (
     <ul

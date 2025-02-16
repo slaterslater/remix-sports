@@ -5,9 +5,26 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react"
-import { Analytics } from "@vercel/analytics/react"
+import { SiteNav } from "./components/SiteNav"
+import type { LinksFunction, MetaFunction } from "@vercel/remix"
+import globalStyles from "~/styles/global.css?url"
+import spinnerStyles from "~/styles/spinner.css?url"
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Remix Sports" },
+    { name: "description", content: "Sports Headlines" },
+  ]
+}
+
+export const links: LinksFunction = () => {
+  return [
+    { rel: "stylesheet", href: globalStyles },
+    { rel: "stylesheet", href: spinnerStyles },
+  ]
+}
+
+export default function App() {
   return (
     <html lang="en">
       <head>
@@ -17,15 +34,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <main>
+          <SiteNav />
+          <Outlet />
+        </main>
         <ScrollRestoration />
         <Scripts />
-        <Analytics />
       </body>
     </html>
   )
-}
-
-export default function App() {
-  return <Outlet />
 }
