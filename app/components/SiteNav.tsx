@@ -57,36 +57,43 @@ export function SiteNav() {
   }
 
   return (
-    <nav>
-      <Form key={JSON.stringify(current)}>
-        {Object.keys(navOptions).map((select) => (
-          <select
-            key={select}
-            name={select}
-            defaultValue={current[select]}
-            onChange={(e) => {
-              const { name, value } = e.target
-              handleChange({ name, value })
-            }}
-          >
-            {navOptions[select].map(({ key, value }) => (
-              <option key={key} value={value}>
-                {key}
-              </option>
-            ))}
-          </select>
-        ))}
-      </Form>
-      <button
-        id="refresh"
-        type="button"
-        onClick={refresh}
-        title="refresh data"
-        disabled={!isIdle}
-      >
-        {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
-      </button>
-    </nav>
+    <>
+      <nav>
+        <Form key={JSON.stringify(current)}>
+          {Object.keys(navOptions).map((select) => (
+            <select
+              key={select}
+              name={select}
+              defaultValue={current[select]}
+              onChange={(e) => {
+                const { name, value } = e.target
+                handleChange({ name, value })
+              }}
+            >
+              {navOptions[select].map(({ key, value }) => (
+                <option key={key} value={value}>
+                  {key}
+                </option>
+              ))}
+            </select>
+          ))}
+        </Form>
+        <button
+          id="refresh"
+          type="button"
+          onClick={refresh}
+          title="refresh data"
+          disabled={!isIdle}
+        >
+          {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
+        </button>
+      </nav>
+      {!current.sport && (
+        <div id="noSport">
+          <Spinner variant="ellipsis" />
+        </div>
+      )}
+    </>
   )
 }
 

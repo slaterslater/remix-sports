@@ -12,7 +12,7 @@ import Spinner from "~/components/Spinner"
 
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
 
-const options = {
+const OPTIONS = {
   all: "All+News",
   headlines: "Headline",
 }
@@ -20,8 +20,8 @@ const options = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sport = params["*"]
   const url = new URL(request.url)
-  const newsParam = url.searchParams.get("news") as keyof typeof options | null
-  const newsType = newsParam ? options[newsParam] : "all"
+  const newsParam = url.searchParams.get("news") as keyof typeof OPTIONS | null
+  const newsType = newsParam ? OPTIONS[newsParam] : "all"
   const posts = await getPlayerNewsPost({ sport, newsType })
   return json({ sport, newsParam, newsType, posts })
 }

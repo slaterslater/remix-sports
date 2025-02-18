@@ -3,19 +3,26 @@ body {
 }
 
 main {
-  padding: 0 10px;
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  min-height: 55vh;
+  margin: 0 auto 40px auto;
+  padding: 5px;
+}
+
+#noSport {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
 }
 
 /* NAV */
 
 nav {
-  width: 100%;
-  max-width: 600px;
-  margin: 25px auto;
+  margin: 20px 0;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
 }
 
 nav form select {
@@ -41,10 +48,8 @@ nav #refresh {
 /* HEADLINES */
 
 #headlines {
-  /* padding: 0 10px; */
   list-style-type: none;
-  max-width: 600px;
-  margin: 15px auto;
+  margin: 15px 0;
 }
 
 ul {
@@ -174,11 +179,15 @@ ul {
   padding-left: 36px;
   font-size: 0.8em;
   margin-bottom: 2px;
+  background-image: url("/public/generic-avatar.webp");
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
 }
 
 .PlayerNewsPost-related-item > a > picture {
   margin-right: 5px;
   margin-left: -36px;
+  background-color: white;
 }
 
 .PlayerNewsPost-related img {
@@ -191,17 +200,15 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 80px;
-  text-align: center;
 }
 
-form button {
+#loadmore button {
+  height: 45px;
   text-transform: uppercase;
-  border-radius: 5px;
-  height: 40px;
-  padding: 0 20px;
-  background-color: black;
   color: white;
+  background-color: black;
   border-color: slategray;
+  border-radius: 5px;
+  padding: 0 20px;
 }

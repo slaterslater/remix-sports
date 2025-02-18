@@ -7,14 +7,9 @@ interface NewsProps {
 export default function Headlines({ news }: NewsProps) {
   if (!news) return null
   return (
-    <ul
-      id="headlines"
-      className="z-10 w-full max-w-lg items-center justify-between font-mono text-sm lg:flex"
-    >
+    <ul id="headlines">
       {news.map((__html, i) => (
-        <li key={i} className="mb-10 pb-5 snap-y">
-          <div dangerouslySetInnerHTML={{ __html }} />
-        </li>
+        <li key={i} dangerouslySetInnerHTML={{ __html }} />
       ))}
     </ul>
   )
