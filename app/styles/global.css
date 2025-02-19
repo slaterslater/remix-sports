@@ -121,6 +121,11 @@ ul {
   margin-left: auto;
   transform: translateY(-30px);
 }
+
+.PlayerNewsPost-team-logo a {
+  color: white;
+}
+
 .PlayerNewsPost-team-logo img {
   height: 80px;
   width: 80px;
