@@ -64,7 +64,7 @@ export function SiteNav() {
             <select
               key={select}
               name={select}
-              defaultValue={current[select]}
+              defaultValue={current[select] ?? ""}
               onChange={(e) => {
                 const { name, value } = e.target
                 handleChange({ name, value })
