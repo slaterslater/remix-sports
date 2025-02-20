@@ -55,24 +55,27 @@ export function SiteNav() {
     <>
       <nav>
         <Form key={JSON.stringify(current)}>
-          {Object.keys(navOptions).map((select) => (
-            <select
-              key={select}
-              name={select}
-              defaultValue={current[select] ?? ""}
-              onChange={(e) => {
-                const { name, value } = e.target
-                handleChange({ name, value })
-              }}
-            >
-              <option hidden disabled value="" />
-              {navOptions[select].map(({ key, value }) => (
-                <option key={key} value={value}>
-                  {key}
-                </option>
-              ))}
-            </select>
-          ))}
+          {Object.keys(navOptions).map((select) => {
+            const defaultValue = current[select] ?? ""
+            return (
+              <select
+                key={select}
+                name={select}
+                defaultValue={defaultValue}
+                onChange={(e) => {
+                  const { name, value } = e.target
+                  handleChange({ name, value })
+                }}
+              >
+                {!!defaultValue && <option hidden disabled value="" />}
+                {navOptions[select].map(({ key, value }) => (
+                  <option key={key} value={value}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            )
+          })}
         </Form>
         <button
           id="refresh"
@@ -81,7 +84,7 @@ export function SiteNav() {
             if (isIdle) revalidator.revalidate()
           }}
           title="refresh data"
-          disabled={!isIdle || !!location.search} // nothing to refresh
+          disabled={!isIdle || !location.search} // nothing to refresh
         >
           {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
         </button>
