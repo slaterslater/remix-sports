@@ -18,6 +18,7 @@ export function SiteNav() {
   const revalidator = useRevalidator()
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // set inital news param and navigate from root route
   useEffect(() => {
     const sport = window.localStorage.getItem(SPORT) ?? "fantasy/football"
     const news = window.localStorage.getItem(NEWS) ?? "headlines"
@@ -27,12 +28,12 @@ export function SiteNav() {
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     switch (name) {
-      case "sport":
+      case "sport": // change route and keep params
         window.localStorage.setItem(SPORT, value)
         const news = searchParams.get("news")
         navigate(`${value}?news=${news}`)
         break
-      case "newsType":
+      case "newsType": // change params and keep route
         window.localStorage.setItem(NEWS, value)
         setSearchParams((prev) => {
           prev.set("news", value)
@@ -45,12 +46,6 @@ export function SiteNav() {
   }
 
   const isIdle = revalidator.state === "idle"
-
-  const refresh = () => {
-    if (!isIdle) return
-    revalidator.revalidate()
-  }
-
   const current: { [key: string]: string } = {
     sport: location.pathname.substring(1),
     newsType: location.search.split("=")[1],
@@ -82,14 +77,16 @@ export function SiteNav() {
         <button
           id="refresh"
           type="button"
-          onClick={refresh}
+          onClick={() => {
+            if (isIdle) revalidator.revalidate()
+          }}
           title="refresh data"
-          disabled={!isIdle}
+          disabled={!isIdle || !!location.search} // nothing to refresh
         >
           {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
         </button>
       </nav>
-      {!current.sport && (
+      {!current.sport && ( // waiting for useEffect to navigate
         <div id="noSport">
           <Spinner variant="ellipsis" />
         </div>
