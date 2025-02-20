@@ -70,6 +70,7 @@ export function SiteNav() {
                 handleChange({ name, value })
               }}
             >
+              <option hidden disabled value="" />
               {navOptions[select].map(({ key, value }) => (
                 <option key={key} value={value}>
                   {key}
