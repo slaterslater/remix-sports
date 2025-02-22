@@ -74,11 +74,14 @@ ul {
   width: 80px;
   height: 80px;
   display: block;
-  background-image: url("/generic-avatar.webp.");
-  background-size: 80px 80px;
   color: white;
   font-size: 1px;
   border-radius: 0 0 2px 2px;
+}
+
+.PlayerNewsPost-image > a:not(:has(*)) {
+  background-image: url("/generic-avatar.webp");
+  background-size: 80px 80px;
 }
 
 .PlayerNewsPost-image > a > picture > img {
@@ -181,15 +184,19 @@ ul {
   text-decoration: none;
   color: black;
   height: 32px;
+  margin-bottom: 2px;
   padding-left: 36px;
   font-size: 0.8em;
-  margin-bottom: 2px;
-  background-image: url("/generic-avatar.webp.");
+}
+
+.PlayerNewsPost-related-item > a:not(:has(*)) {
+  background-image: url("/generic-avatar.webp");
   background-repeat: no-repeat;
   background-size: 32px 32px;
 }
 
 .PlayerNewsPost-related-item > a > picture {
+  height: 32px;
   margin-right: 5px;
   margin-left: -36px;
   background-color: white;

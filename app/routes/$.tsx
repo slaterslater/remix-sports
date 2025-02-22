@@ -1,92 +1,60 @@
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react"
-import { json } from "@vercel/remix"
+import { useState } from "react"
+import { useFetcher, useLoaderData, useLocation } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@vercel/remix"
-import { useEffect, useState } from "react"
+import { json } from "@vercel/remix"
 import News from "~/components/News"
 import Spinner from "~/components/Spinner"
-
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
-
-const OPTIONS = {
-  all: "All+News",
-  headlines: "Headline",
-}
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sport = params["*"]
   const url = new URL(request.url)
-  const newsParam = url.searchParams.get("news") as keyof typeof OPTIONS | null
-  const newsType = newsParam ? OPTIONS[newsParam] : "all"
-  const posts = await getPlayerNewsPost({ sport, newsType })
-  return json({ sport, newsParam, newsType, posts })
-}
-
-interface ActionData {
-  posts: string[]
-}
-
-interface FormData {
-  sport: string
-  newsType: string
-  page: string
+  const category = url.searchParams.get("category")
+  const news = await getPlayerNewsPost({ sport, category })
+  return json({ news })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const { sport, newsType, page } = Object.fromEntries(formData)
-  const posts = await getPlayerNewsPost({ sport, newsType, page } as FormData)
-  return json<ActionData>({ posts })
+  const page = formData.get("page") as string
+  const url = new URL(request.url)
+  const sport = url.pathname
+  const category = url.searchParams.get("category")
+  const news = await getPlayerNewsPost({ sport, category, page })
+  return json({ news })
+}
+
+interface ActionData {
+  news: string[]
 }
 
 export default function Index() {
-  const { sport, newsParam, newsType, posts } = useLoaderData<typeof loader>()
-  const moreNews = useActionData<ActionData>()
-  const [news, setNews] = useState(posts)
+  const location = useLocation()
+  const key = `${location.pathname}${location.search}`
 
-  const navigation = useNavigation()
-  const isIdle = navigation.state === "idle"
-
-  useEffect(() => {
-    if (!isIdle) return
-    if (posts && !moreNews) {
-      setNews(posts)
-      setPage(1)
-    }
-    if (moreNews) {
-      setNews((prev: string[]) => [...prev, ...moreNews.posts])
-    }
-  }, [posts, moreNews, isIdle])
+  const { news } = useLoaderData<typeof loader>()
+  const fetcher = useFetcher<ActionData>({ key })
 
   const [page, setPage] = useState(1)
   const nextPage = () => setPage((prev) => (prev += 1))
 
-  const action = `${sport}?news=${newsParam}`
+  const moreNews = fetcher.data?.news ?? []
+  const isIdle = fetcher.state === "idle"
 
   return (
     <>
-      <News news={news} key={action} />
-      {isIdle && (
-        <Form
-          id="loadmore"
-          method="POST"
-          onSubmit={nextPage}
-          preventScrollReset={true}
-          action={action}
-        >
-          <input type="hidden" value={page + 1} name="page" />
-          <input type="hidden" value={sport} name="sport" />
-          <input type="hidden" value={newsType} name="newsType" />
-          <button type="submit" name="intent" value="more">
-            load more
-          </button>
-        </Form>
-      )}
-      {!isIdle && <Spinner variant="ellipsis" />}
+      <News news={[...news, ...moreNews]} />
+      <fetcher.Form
+        id="loadmore"
+        method="post"
+        onSubmit={nextPage}
+        preventScrollReset={true}
+        action={location.pathname}
+      >
+        <input type="hidden" value={page + 1} name="page" />
+        {isIdle && <button type="submit">load more</button>}
+        {!isIdle && <Spinner variant="ellipsis" />}
+      </fetcher.Form>
     </>
   )
 }

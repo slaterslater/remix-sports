@@ -1,15 +1,21 @@
 import * as cheerio from "cheerio"
 
+enum news {
+  all = "All+News",
+  headlines = "Headline",
+}
+
 export const getPlayerNewsPost = async ({
   sport,
-  newsType,
+  category,
   page = 1,
 }: {
   sport: string | undefined
-  newsType: string | null
+  category: string | null
   page?: string | number | null
 }) => {
-  const URL = `https://www.nbcsports.com/${sport}/player-news?f0=${newsType}&p=${page}`
+  const newsCategory = news[category as keyof typeof news]
+  const URL = `https://www.nbcsports.com/${sport}/player-news?f0=${newsCategory}&p=${page}`
 
   const resp = await fetch(URL)
   const text = await resp.text()

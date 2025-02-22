@@ -10,7 +10,7 @@ import Spinner from "./Spinner"
 import { useEffect } from "react"
 
 const SPORT = "sport-preference"
-const NEWS = "news-preference"
+const CATEGORY = "news-preference"
 
 export function SiteNav() {
   const navigate = useNavigate()
@@ -21,8 +21,8 @@ export function SiteNav() {
   // set inital news param and navigate from root route
   useEffect(() => {
     const sport = window.localStorage.getItem(SPORT) ?? "fantasy/football"
-    const news = window.localStorage.getItem(NEWS) ?? "headlines"
-    let url = `${sport}?news=${news}`
+    const category = window.localStorage.getItem(CATEGORY) ?? "headlines"
+    let url = `${sport}?category=${category}`
     navigate(url)
   }, [navigate])
 
@@ -30,13 +30,13 @@ export function SiteNav() {
     switch (name) {
       case "sport": // change route and keep params
         window.localStorage.setItem(SPORT, value)
-        const news = searchParams.get("news")
-        navigate(`${value}?news=${news}`)
+        const category = searchParams.get("category")
+        navigate(`${value}?category=${category}`)
         break
-      case "newsType": // change params and keep route
-        window.localStorage.setItem(NEWS, value)
+      case "category": // change params and keep route
+        window.localStorage.setItem(CATEGORY, value)
         setSearchParams((prev) => {
-          prev.set("news", value)
+          prev.set("category", value)
           return prev
         })
         break
@@ -48,21 +48,20 @@ export function SiteNav() {
   const isIdle = revalidator.state === "idle"
   const current: { [key: string]: string } = {
     sport: location.pathname.substring(1),
-    newsType: location.search.split("=")[1],
+    category: location.search.split("=")[1],
   }
 
   return (
     <>
       <nav>
-        <Form key={JSON.stringify(current)}>
+        <Form>
           {Object.keys(navOptions).map((select) => {
             const defaultValue = current[select] ?? ""
-            console.log({ bool: !!defaultValue, c: current[select] })
             return (
               <select
                 key={select}
                 name={select}
-                defaultValue={defaultValue}
+                value={defaultValue}
                 onChange={(e) => {
                   const { name, value } = e.target
                   handleChange({ name, value })
@@ -108,7 +107,7 @@ export const navOptions: NavOptions = {
     { key: "NFL", value: "fantasy/football" },
     { key: "Jays", value: "mlb/toronto-blue-jays" },
   ],
-  newsType: [
+  category: [
     { key: "Headlines", value: "headlines" },
     { key: "All News", value: "all" },
   ],
