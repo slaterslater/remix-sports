@@ -57,6 +57,7 @@ export function SiteNav() {
         <Form key={JSON.stringify(current)}>
           {Object.keys(navOptions).map((select) => {
             const defaultValue = current[select] ?? ""
+            console.log({ bool: !!defaultValue, c: current[select] })
             return (
               <select
                 key={select}
@@ -67,7 +68,7 @@ export function SiteNav() {
                   handleChange({ name, value })
                 }}
               >
-                {!!defaultValue && <option hidden disabled value="" />}
+                {!defaultValue && <option hidden disabled value="" />}
                 {navOptions[select].map(({ key, value }) => (
                   <option key={key} value={value}>
                     {key}
