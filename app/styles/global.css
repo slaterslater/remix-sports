@@ -60,7 +60,7 @@ ul {
 #headlines > li {
   border-top: 2px solid slategray;
   list-style: none;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 /* PLAYER */
@@ -154,7 +154,6 @@ ul {
 
 .PlayerNewsPost-headline {
   font-weight: 600;
-  /* margin-top: 10px; */
   margin: 8px 0;
 }
 
@@ -170,12 +169,19 @@ ul {
 /* RELATED */
 
 .PlayerNewsPost-related {
-  margin-top: 5px;
-  margin-left: 2px;
+  --img-size-sm: 25px;
 }
 
 .PlayerNewsPost-related-title {
-  margin-bottom: 5px;
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.PlayerNewsPost-related-items {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  row-gap: 2px;
+  column-gap: 40px;
 }
 
 .PlayerNewsPost-related-item > a {
@@ -183,27 +189,27 @@ ul {
   align-items: center;
   text-decoration: none;
   color: black;
-  height: 32px;
-  margin-bottom: 2px;
-  padding-left: 36px;
+  height: var(--img-size-sm);
+  padding-left: var(--img-size-sm);
   font-size: 0.8em;
 }
 
 .PlayerNewsPost-related-item > a:not(:has(*)) {
   background-image: url("/generic-avatar.webp");
   background-repeat: no-repeat;
-  background-size: 32px 32px;
+  background-size: var(--img-size-sm) var(--img-size-sm);
 }
 
 .PlayerNewsPost-related-item > a > picture {
-  height: 32px;
   margin-right: 5px;
-  margin-left: -36px;
+  margin-left: calc(var(--img-size-sm) * -1);
   background-color: white;
 }
 
 .PlayerNewsPost-related img {
   border-radius: 2px;
+  height: var(--img-size-sm);
+  width: var(--img-size-sm);
 }
 
 /* LOAD MORE */
