@@ -170,6 +170,7 @@ ul {
 
 .PlayerNewsPost-related {
   --img-size-sm: 25px;
+  margin-left: 1px;
 }
 
 .PlayerNewsPost-related-title {
