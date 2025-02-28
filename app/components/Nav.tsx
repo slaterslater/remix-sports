@@ -5,7 +5,42 @@ import NavOptions from "./NavOptions"
 import { useEffect, useRef } from "react"
 
 export default function Nav() {
-  const navRef = useRef(null)
+  const navRef = useRef<HTMLElement | null>(null)
+  const scrollY = useRef(0)
+  const thresholdY = useRef(0)
+
+  const handleScroll = () => {
+    let nav = navRef.current
+    if (!nav) return
+
+    const y = window.scrollY
+    if (y < scrollY.current) {
+      nav.classList.add("visible")
+      thresholdY.current = 0
+    } else {
+      thresholdY.current += 1
+      if (thresholdY.current < 30) return
+      nav.classList.remove("visible")
+    }
+    scrollY.current = y
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
+  return (
+    <nav ref={navRef}>
+      <NavOptions />
+      <RefreshButton />
+    </nav>
+  )
+}
+
+function RefreshButton() {
   const revalidator = useRevalidator()
   const isIdle = revalidator.state === "idle"
 
@@ -14,22 +49,15 @@ export default function Nav() {
     revalidator.revalidate()
   }
 
-  useEffect(() => {
-    console.log({ navRef })
-  }, [])
-
   return (
-    <nav ref={navRef}>
-      <NavOptions />
-      <button
-        id="refresh"
-        type="button"
-        onClick={refresh}
-        title="refresh data"
-        disabled={!isIdle}
-      >
-        {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
-      </button>
-    </nav>
+    <button
+      id="refresh"
+      type="button"
+      onClick={refresh}
+      title="refresh data"
+      disabled={!isIdle}
+    >
+      {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
+    </button>
   )
 }

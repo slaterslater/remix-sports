@@ -21,14 +21,34 @@ main {
 /* NAV */
 
 nav {
-  padding: 20px 0;
+  /* padding: 20px 0; */
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   position: fixed;
   width: 100%;
   max-width: 600px;
+  padding-right: 5px;
   background-color: white;
-  /* z-index: 100; */
+  z-index: 100;
+  height: 0;
+  overflow: hidden;
+  border-bottom: none;
+  transition: height 0.3s ease-out;
+}
+
+nav.visible {
+  height: 65px;
+  border-bottom: 2px solid slategray;
+}
+
+nav * {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+nav.visible * {
+  opacity: 1;
 }
 
 nav form select {
@@ -68,6 +88,10 @@ ul {
   border-top: 2px solid slategray;
   list-style: none;
   margin-bottom: 20px;
+}
+
+#headlines > li:first-child {
+  border-top: none;
 }
 
 /* PLAYER */
