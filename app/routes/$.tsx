@@ -30,7 +30,8 @@ interface ActionData {
 
 export default function Index() {
   const location = useLocation()
-  const key = `${location.pathname}${location.search}`
+  const { pathname, search } = location
+  const key = pathname + search
 
   const { news } = useLoaderData<typeof loader>()
   const fetcher = useFetcher<ActionData>({ key })
@@ -41,15 +42,25 @@ export default function Index() {
   const moreNews = fetcher.data?.news ?? []
   const isIdle = fetcher.state === "idle"
 
+  // move spinner here
+  // display when no news. and when on root
+
+  // console.log({ pathname, search, news })
+
   return (
     <>
       <News news={[...news, ...moreNews]} />
+      {/* {!current.sport && ( // waiting for useEffect to navigate
+        <div id="noSport">
+          <Spinner variant="ellipsis" />
+        </div>
+      )} */}
       <fetcher.Form
         id="loadmore"
         method="post"
         onSubmit={nextPage}
         preventScrollReset={true}
-        action={location.pathname}
+        action={pathname}
       >
         <input type="hidden" value={page + 1} name="page" />
         {isIdle && <button type="submit">load more</button>}

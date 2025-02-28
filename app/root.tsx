@@ -4,11 +4,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "@remix-run/react"
-import { SiteNav } from "./components/SiteNav"
+import Nav from "./components/Nav"
 import type { LinksFunction, MetaFunction } from "@vercel/remix"
 import globalStyles from "~/styles/global.css?url"
 import spinnerStyles from "~/styles/spinner.css?url"
+import { useEffect } from "react"
+import { CATEGORY, SPORT } from "./localStorageKeys"
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,6 +28,16 @@ export const links: LinksFunction = () => {
 }
 
 export default function App() {
+  const navigate = useNavigate()
+
+  // navigate to route user saw last
+  useEffect(() => {
+    const sport = localStorage.getItem(SPORT) ?? "fantasy/football"
+    const category = localStorage.getItem(CATEGORY) ?? "headlines"
+    let url = `${sport}?category=${category}`
+    navigate(url)
+  }, [])
+
   return (
     <html lang="en">
       <head>
@@ -35,7 +48,7 @@ export default function App() {
       </head>
       <body>
         <main>
-          <SiteNav />
+          <Nav />
           <Outlet />
         </main>
         <ScrollRestoration />
