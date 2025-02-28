@@ -42,19 +42,9 @@ export default function Index() {
   const moreNews = fetcher.data?.news ?? []
   const isIdle = fetcher.state === "idle"
 
-  // move spinner here
-  // display when no news. and when on root
-
-  // console.log({ pathname, search, news })
-
   return (
     <>
       <News news={[...news, ...moreNews]} />
-      {/* {!current.sport && ( // waiting for useEffect to navigate
-        <div id="noSport">
-          <Spinner variant="ellipsis" />
-        </div>
-      )} */}
       <fetcher.Form
         id="loadmore"
         method="post"
