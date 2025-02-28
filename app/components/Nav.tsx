@@ -15,12 +15,12 @@ export default function Nav() {
 
     const y = window.scrollY
     if (y < scrollY.current) {
-      nav.classList.add("visible")
+      nav.classList.remove("hidden")
       thresholdY.current = 0
     } else {
       thresholdY.current += 1
       if (thresholdY.current < 30) return
-      nav.classList.remove("visible")
+      nav.classList.add("hidden")
     }
     scrollY.current = y
   }
