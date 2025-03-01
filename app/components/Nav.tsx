@@ -19,7 +19,7 @@ export default function Nav() {
       thresholdY.current = 0
     } else {
       thresholdY.current += 1
-      if (thresholdY.current < 30) return
+      if (thresholdY.current < 15) return
       nav.classList.add("hidden")
     }
     scrollY.current = y
