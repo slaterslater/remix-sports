@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFetcher, useLoaderData, useLocation } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@vercel/remix"
 import { json } from "@vercel/remix"
@@ -33,27 +33,32 @@ export default function Index() {
   const { pathname, search } = location
   const key = pathname + search
 
-  const { news } = useLoaderData<typeof loader>()
+  const data = useLoaderData<typeof loader>()
   const fetcher = useFetcher<ActionData>({ key })
 
-  const [page, setPage] = useState(1)
-  const nextPage = () => setPage((prev) => (prev += 1))
+  const [news, setNews] = useState(data.news)
 
-  const moreNews = fetcher.data?.news ?? []
+  const moreNews = fetcher.data?.news
   const isIdle = fetcher.state === "idle"
+
+  useEffect(() => {
+    if (!moreNews) return
+    setNews((prev: string[]) => [...prev, ...moreNews])
+  }, [moreNews])
+
+  const nextPage = news.length / data.news.length + 1
 
   return (
     <>
-      <News news={[...news, ...moreNews]} />
+      <News news={news} />
       <fetcher.Form
         id="loadmore"
         method="post"
-        onSubmit={nextPage}
         preventScrollReset={true}
         action={pathname}
       >
-        <input type="hidden" value={page + 1} name="page" />
-        {isIdle && <button type="submit">load more</button>}
+        <input type="hidden" value={nextPage} name="page" />
+        {isIdle && <button type="submit">load page</button>}
         {!isIdle && <Spinner variant="ellipsis" />}
       </fetcher.Form>
     </>

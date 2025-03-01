@@ -9,7 +9,6 @@ export default function RootRedirect() {
 
   // navigate to route user saw last
   useEffect(() => {
-    console.log("redirect")
     const sport = localStorage.getItem(SPORT) ?? "fantasy/football"
     const category = localStorage.getItem(CATEGORY) ?? "headlines"
     let url = `${sport}?category=${category}`
