@@ -1,4 +1,9 @@
-import { useRevalidator } from "@remix-run/react"
+import {
+  useFetcher,
+  useLocation,
+  useNavigate,
+  useRevalidator,
+} from "@remix-run/react"
 import { IoMdRefresh } from "react-icons/io"
 import Spinner from "./Spinner"
 import NavOptions from "./NavOptions"
@@ -43,11 +48,18 @@ export default function Nav() {
 
 function RefreshButton() {
   const revalidator = useRevalidator()
-  const isIdle = revalidator.state === "idle"
+  const navigate = useNavigate()
+  const { pathname, search } = useLocation()
+  const fetcher = useFetcher({ key: pathname.substring(1) })
+
+  const isIdle = revalidator.state === "idle" && fetcher.state === "idle"
+  // const isIdle = revalidator.state === "idle"
 
   const refresh = () => {
-    if (!isIdle) return
-    revalidator.revalidate()
+    // if (!isIdle) return
+    // fetcher.submit({ intent: "clear" }, { method: "post", action: pathname })
+    // revalidator.revalidate()
+    navigate(pathname + search, { replace: true })
   }
 
   return (

@@ -26,6 +26,7 @@ export const links: LinksFunction = () => {
 }
 
 export default function App() {
+  // const
   return (
     <html lang="en">
       <head>
@@ -38,7 +39,7 @@ export default function App() {
         <main>
           <Nav />
           <RootRedirect />
-          <Outlet />
+          <Outlet context={{}} />
         </main>
         <ScrollRestoration />
         <Scripts />

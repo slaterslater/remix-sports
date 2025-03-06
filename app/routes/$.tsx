@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useFetcher, useLoaderData } from "@remix-run/react"
+import { useFetcher, useLoaderData, useOutletContext } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@vercel/remix"
 import { json } from "@vercel/remix"
 import News from "~/components/News"
@@ -16,13 +16,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const props = {
-    sport: formData.get("sport") as string,
-    category: formData.get("category") as string,
-    page: formData.get("page") as string,
+  const intent = formData.get("intent")
+  console.log({ intent })
+  switch (intent) {
+    case "clear":
+      return json({ news: [] })
+    case "more":
+      const props = {
+        sport: formData.get("sport") as string,
+        category: formData.get("category") as string,
+        page: formData.get("page") as string,
+      }
+      const news = await getPlayerNewsPost(props)
+      return json({ news })
+    default:
+      return null
   }
-  const news = await getPlayerNewsPost(props)
-  return json({ news })
 }
 
 interface ActionData {
@@ -31,13 +40,18 @@ interface ActionData {
 
 export default function Index() {
   const { news, sport, category } = useLoaderData<typeof loader>()
-  const fetcher = useFetcher<ActionData>({ key: sport + category })
+  const fetcher = useFetcher<ActionData>({ key: sport })
+
+  // const myValue = useOutletContext();
 
   const [moreNews, setMoreNews] = useState<string[]>([])
+  // wrap the app in a news context?
+  // or maybe determine if more is empty and setmore to []
 
   useEffect(() => {
     const more = fetcher.data?.news ?? []
-    if (!more) return
+    console.log({ more })
+    // does a navigation reset fetcher?
     setMoreNews((prev: string[]) => [...prev, ...more])
   }, [fetcher.data])
 
@@ -61,7 +75,11 @@ export default function Index() {
         <input type="hidden" value={nextPage} name="page" />
         <input type="hidden" value={sport} name="sport" />
         <input type="hidden" value={category} name="category" />
-        {isIdle && <button type="submit">load page</button>}
+        {isIdle && (
+          <button type="submit" name="intent" value="more">
+            load page
+          </button>
+        )}
         {!isIdle && <Spinner variant="ellipsis" />}
       </fetcher.Form>
     </>
