@@ -1,10 +1,9 @@
 // Headlines Component
 
-interface NewsProps {
-  news: string[] | undefined
-}
+import { useNewsContext } from "./NewsOutlet"
 
-export default function Headlines({ news }: NewsProps) {
+export default function News() {
+  const { news } = useNewsContext()
   if (!news) return null
   return (
     <ul id="headlines">

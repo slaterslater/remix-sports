@@ -1,16 +1,10 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react"
+import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react"
 import Nav from "./components/Nav"
 import type { LinksFunction, MetaFunction } from "@vercel/remix"
 import globalStyles from "~/styles/global.css?url"
 import spinnerStyles from "~/styles/spinner.css?url"
 import RootRedirect from "./components/RootRedirect"
-import { useState } from "react"
+import NewsOutlet from "./components/NewsOutlet"
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,7 +21,6 @@ export const links: LinksFunction = () => {
 }
 
 export default function App() {
-  const [news, setNews] = useState<string[]>([])
   return (
     <html lang="en">
       <head>
@@ -40,16 +33,11 @@ export default function App() {
         <main>
           <Nav />
           <RootRedirect />
-          <Outlet context={{ news, setNews }} />
+          <NewsOutlet />
         </main>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   )
-}
-
-export type OutletContextType = {
-  news: string[]
-  setNews: React.Dispatch<React.SetStateAction<string[]>>
 }
