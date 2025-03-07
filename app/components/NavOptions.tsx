@@ -4,7 +4,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react"
-import { CATEGORY, SPORT } from "~/localStorageKeys"
+import { PREFERENCE } from "~/utils/localStorageKeys"
 
 export default function NavOptions() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -14,12 +14,12 @@ export default function NavOptions() {
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     switch (name) {
       case "sport": // change route and keep params
-        window.localStorage.setItem(SPORT, value)
+        window.localStorage.setItem(PREFERENCE.sport, value)
         const category = searchParams.get("category")
         navigate(`${value}?category=${category}`)
         break
       case "category": // change params and keep route
-        window.localStorage.setItem(CATEGORY, value)
+        window.localStorage.setItem(PREFERENCE.category, value)
         setSearchParams((prev) => {
           prev.set("category", value)
           return prev
