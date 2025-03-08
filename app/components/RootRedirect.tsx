@@ -5,7 +5,7 @@ import Spinner from "./Spinner"
 
 export default function RootRedirect() {
   const navigate = useNavigate()
-  const location = useLocation()
+  const { search } = useLocation()
 
   // navigate to route user saw last
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function RootRedirect() {
     navigate(url)
   }, [navigate])
 
-  if (location.search) return null
+  if (search) return null
   return (
     <div id="noSport">
       <Spinner variant="ellipsis" />

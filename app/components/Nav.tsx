@@ -1,8 +1,6 @@
-import { useRevalidator } from "@remix-run/react"
-import { IoMdRefresh } from "react-icons/io"
-import Spinner from "./Spinner"
 import NavOptions from "./NavOptions"
 import { useEffect, useRef } from "react"
+import RefreshButton from "./RefreshButton"
 
 export default function Nav() {
   const navRef = useRef<HTMLElement | null>(null)
@@ -38,28 +36,5 @@ export default function Nav() {
       <NavOptions />
       <RefreshButton />
     </nav>
-  )
-}
-
-function RefreshButton() {
-  const revalidator = useRevalidator()
-
-  const isIdle = revalidator.state === "idle"
-
-  const refresh = () => {
-    if (!isIdle) return
-    revalidator.revalidate()
-  }
-
-  return (
-    <button
-      id="refresh"
-      type="button"
-      onClick={refresh}
-      title="refresh data"
-      disabled={!isIdle}
-    >
-      {isIdle ? <IoMdRefresh /> : <Spinner variant="ring" />}
-    </button>
   )
 }

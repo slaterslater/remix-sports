@@ -17,6 +17,7 @@ export default function MoreButton() {
   const isIdle = fetcher.state === "idle"
   const nextPage = news.length / 10 + 1
 
+  if (!news.length) return null
   return (
     <fetcher.Form
       id="loadmore"
@@ -27,7 +28,7 @@ export default function MoreButton() {
       <input type="hidden" value={nextPage} name="page" />
       <input type="hidden" value={sport} name="sport" />
       <input type="hidden" value={category} name="category" />
-      {isIdle && <button type="submit">load page {nextPage}</button>}
+      {isIdle && <button type="submit">page {nextPage}</button>}
       {!isIdle && <Spinner variant="ellipsis" />}
     </fetcher.Form>
   )

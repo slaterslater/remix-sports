@@ -39,6 +39,7 @@ export default function Index() {
   const latest = useMemo(() => JSON.stringify(news), [news])
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" })
     setNews(news)
   }, [latest])
 
