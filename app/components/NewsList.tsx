@@ -2,7 +2,7 @@
 
 import { useNewsContext } from "./NewsOutlet"
 
-export default function News() {
+export default function NewsList() {
   const { news } = useNewsContext()
   if (!news) return null
   return (

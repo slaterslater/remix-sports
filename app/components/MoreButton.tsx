@@ -28,8 +28,9 @@ export default function MoreButton() {
       <input type="hidden" value={nextPage} name="page" />
       <input type="hidden" value={sport} name="sport" />
       <input type="hidden" value={category} name="category" />
-      {isIdle && <button type="submit">page {nextPage}</button>}
-      {!isIdle && <Spinner variant="ellipsis" />}
+      <button type="submit" disabled={!isIdle}>
+        {isIdle ? "more" : <Spinner variant="ellipsis" />}
+      </button>
     </fetcher.Form>
   )
 }

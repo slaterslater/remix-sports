@@ -50,16 +50,17 @@
 }
 .lds-ellipsis {
   display: flex;
+  align-items: center;
   position: relative;
   width: 80px;
-  height: 80px;
-  margin: 0 auto;
+  height: 100%;
+  margin: auto;
+  color: slategray;
 }
 .lds-ellipsis div {
   position: absolute;
-  top: 33.33333px;
-  width: 13.33333px;
-  height: 13.33333px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: currentColor;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);

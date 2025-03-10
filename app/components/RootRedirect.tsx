@@ -16,9 +16,5 @@ export default function RootRedirect() {
   }, [navigate])
 
   if (pathname !== "/") return null
-  return (
-    <div id="noSport">
-      <Spinner variant="ellipsis" />
-    </div>
-  )
+  return <Spinner variant="ellipsis" />
 }

@@ -12,11 +12,11 @@ main {
   padding: 0 5px;
 }
 
-#noSport {
+/* #noSport {
   display: flex;
   flex-grow: 1;
   align-items: center;
-}
+} */
 
 /* NAV */
 
@@ -67,6 +67,7 @@ nav #refresh {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 5px;
 }
 
 /* HEADLINES */
@@ -251,10 +252,11 @@ ul {
 }
 
 #loadmore button {
+  width: 120px;
   height: 45px;
   text-transform: uppercase;
-  color: white;
-  background-color: black;
+  color: black;
+  background-color: buttonface;
   border-color: slategray;
   border-radius: 5px;
   padding: 0 20px;

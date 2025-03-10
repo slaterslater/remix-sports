@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react"
 import { useLoaderData } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@vercel/remix"
 import { json } from "@vercel/remix"
-import News from "~/components/News"
+import NewsList from "~/components/NewsList"
 import { getPlayerNewsPost } from "~/utils/getPlayerNewsPost"
 import { useNewsContext } from "~/components/NewsOutlet"
 import MoreButton from "~/components/MoreButton"
@@ -45,7 +45,7 @@ export default function Index() {
 
   return (
     <>
-      <News />
+      <NewsList />
       <MoreButton />
     </>
   )
