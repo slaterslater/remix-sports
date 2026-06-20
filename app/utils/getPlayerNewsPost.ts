@@ -11,7 +11,7 @@ const CLASSES_TO_REMOVE = [
   ".PlayerNewsPost-promotionalText",
   ".PlayerNewsPost-actions",
   ".PlayerNewsPost-ctas",
-  ".PlayerNewsPost-statsCta"
+  // ".PlayerNewsPost-statsCta"
 ]
 
 export const getPlayerNewsPost = async ({
