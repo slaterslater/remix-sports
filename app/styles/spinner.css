@@ -55,7 +55,7 @@
   width: 80px;
   height: 100%;
   margin: auto;
-  color: darkslategray;
+  color: #444;
 }
 .lds-ellipsis div {
   position: absolute;

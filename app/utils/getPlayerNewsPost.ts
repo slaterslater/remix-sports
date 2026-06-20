@@ -5,6 +5,15 @@ enum news {
   headlines = "Headline",
 }
 
+const CLASSES_TO_REMOVE = [
+  ".PlayerNewsPost-footer",
+  ".FavoriteLink-wrapper",
+  ".PlayerNewsPost-promotionalText",
+  ".PlayerNewsPost-actions",
+  ".PlayerNewsPost-ctas",
+  ".PlayerNewsPost-statsCta"
+]
+
 export const getPlayerNewsPost = async ({
   sport,
   category,
@@ -25,9 +34,7 @@ export const getPlayerNewsPost = async ({
     .map(function () {
       const postClone = $(this).clone()
       postClone
-        .find(
-          ".PlayerNewsPost-footer, .FavoriteLink-wrapper, .PlayerNewsPost-promotionalText"
-        )
+        .find(CLASSES_TO_REMOVE.join(", "))
         .remove()
       return postClone.html()
     })
