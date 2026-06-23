@@ -263,10 +263,15 @@ ul {
 }
 
 /* AUTHOR */
-.PlayerNewsPost-author a {
+.PlayerNewsPost-author {
   color: slategray;
   font-size: 0.7em;
   text-transform: uppercase;
+
+}
+
+.PlayerNewsPost-author a {
+  color: slategray;
   text-decoration: none;
 }
 
