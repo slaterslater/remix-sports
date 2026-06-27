@@ -17,6 +17,7 @@ export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: globalStyles },
     { rel: "stylesheet", href: spinnerStyles },
+    { rel: "manifest", href: "/manifest.json" },
   ]
 }
 
